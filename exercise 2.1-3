@@ -1,0 +1,9 @@
+int* search(int* begin, const int* end, int v)
+{
+    for (auto itr{ begin }; itr != end; itr++)
+    {
+        if (*itr == v)
+            return itr;
+    }
+    return nullptr;
+}
