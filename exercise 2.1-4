@@ -1,0 +1,61 @@
+//my initial function. Adding is emplemented from right to left as in the original binary adding. 
+//As I understood, condition "two n-element arrays A and B" asumes that these arrays are equal. 
+//So i didn't cosider the case of adding different arrays.  
+std::vector<int> binaryAdd(std::vector<int>& A, std::vector<int>& B)
+{
+    std::vector<int> C(std::size(A) + 1);
+    auto itrB = B.rbegin();
+    auto itrC = C.rbegin();
+    int carry{};
+    for (auto itrA = A.rbegin(); itrA!=A.rend(); itrA++)
+    {
+        if (*itrA == 1 && *itrB == 1)
+        {
+            *itrC = carry;
+            carry = 1;
+        }
+        else if ((*itrA == 1 && *itrB == 0) || (*itrA == 0 && *itrB == 1))
+        {
+            if (carry == 1)
+                *itrC = 0;
+            else
+                *itrC = 1;
+        }
+        else if (*itrA == 0 && *itrB == 0)
+        {
+            if (carry == 1)
+            {
+                *itrC = 1;
+                carry = 0;
+            }
+            else
+                *itrC = 0;
+        }
+        ++itrC;
+        ++itrB;
+    }
+    *itrC = carry;
+    return C;
+}
+//check of the function with some two arrays
+int main() 
+{   
+    std::vector A{ 1,0,0,1,1,0,1,1,0,0 };
+    std::vector B{ 1,1,0,0,0,0,1,1,1,0 };
+    std::vector C{ binaryAdd(A, B) };
+
+    std::cout << "Vector A is   [ ";
+    for (auto& el : A)
+        std::cout << el << " ";
+    std::cout << "]\n";
+    std::cout << "Vector B is   [ ";
+    for (auto& el : B)
+        std::cout << el << " ";
+    std::cout << "]\n";
+    std::cout << "Vector C is [ ";
+    for (auto& el : C)
+        std::cout << el << " ";
+    std::cout << "]\n";
+    
+    return 0;
+}
