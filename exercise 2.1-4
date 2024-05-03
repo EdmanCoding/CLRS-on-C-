@@ -1,3 +1,7 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+
 //my initial function. Adding is emplemented from right to left as in the original binary adding. 
 //As I understood, condition "two n-element arrays A and B" asumes that these arrays are equal. 
 //So i didn't cosider the case of adding different arrays.  
@@ -33,6 +37,24 @@ std::vector<int> binaryAdd(std::vector<int>& A, std::vector<int>& B)
         }
         ++itrC;
         ++itrB;
+    }
+    *itrC = carry;
+    return C;
+}
+// It's the second version of the code with no use of if/else branches after i watched the solution here https://atekihcan.github.io/CLRS/02/E02.01-04/#python-code 
+// Adding again calculated from right ot left asuming that A and B have an equal length (condition "two n-element arrays A and B")
+std::vector<int> binaryAdd2(std::vector<int>& A, std::vector<int>& B)
+{
+    std::vector<int> C(std::size(A) + 1);
+    auto itrB = B.rbegin();
+    auto itrC = C.rbegin();
+    int carry{};
+    for (auto itrA = A.rbegin(); itrA != A.rend(); itrA++)
+    {
+        *itrC = (*itrA + *itrB + carry) % 2;
+        carry = std::floor((*itrA + *itrB + carry) / 2);
+        itrC++;
+        itrB++;
     }
     *itrC = carry;
     return C;
